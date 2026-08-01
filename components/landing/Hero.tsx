@@ -1,94 +1,46 @@
-import { ArrowRight, CheckCircle2, Play } from "lucide-react";
+import Link from "next/link";
+import { auth } from "@clerk/nextjs/server";
 import { Button } from "@/components/ui/button";
-import { DashboardMockup } from "@/components/landing/DashboardMockup";
 
-export function Hero() {
+export async function Hero() {
+    const { userId } = await auth();
+
     return (
-        <section className="relative overflow-hidden">
-            <div className="mx-auto grid min-h-screen max-w-7xl items-center gap-16 px-6 pt-40 pb-24 lg:grid-cols-2">
+        <section className="mx-auto flex min-h-screen max-w-7xl flex-col items-center justify-center px-6 text-center">
+            <span className="rounded-full border border-border bg-muted px-4 py-1 text-sm font-medium text-muted-foreground">
+                ✈️ AI-Powered Travel Planner
+            </span>
 
-                {/* Left Side */}
-                <div>
+            <h1 className="mt-6 text-5xl font-extrabold tracking-tight sm:text-6xl lg:text-7xl">
+                Plan Your Dream Trip with{" "}
+                <span className="text-primary">AI Planner</span>
+            </h1>
 
-                    {/* Badge */}
-                    <div className="inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
-                        ✈️ AI-Powered Travel Planning
-                    </div>
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
+                Create personalized travel itineraries in seconds. Simply enter your
+                destination, budget, travel preferences, and let AI generate your
+                complete trip—including attractions, restaurants, hotels, maps, and
+                day-by-day plans.
+            </p>
 
-                    {/* Heading */}
-                    <h1 className="mt-8 text-5xl font-extrabold leading-tight tracking-tight sm:text-6xl lg:text-7xl">
-                        Plan Smarter Trips
-                        <br />
+            <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+                <Link href={userId ? "/dashboard" : "/sign-up"}>
+                    <Button size="lg">
+                        🚀 Start Planning for Free
+                    </Button>
+                </Link>
 
-                        <span className="bg-gradient-to-r from-blue-600 via-violet-600 to-cyan-500 bg-clip-text text-transparent">
-                            with AI Planner
-                        </span>
-                    </h1>
+                <a href="#features">
+                    <Button variant="outline" size="lg">
+                        See How It Works
+                    </Button>
+                </a>
+            </div>
 
-                    {/* Description */}
-                    <p className="mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground">
-                        Generate personalized travel itineraries, discover the best
-                        restaurants and hotels, explore maps, and plan unforgettable
-                        adventures in seconds using the power of AI.
-                    </p>
-
-                    {/* Buttons */}
-                    <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-
-                        <Button
-                            size="lg"
-                            className="gap-2"
-                        >
-                            Start Planning for Free
-
-                            <ArrowRight className="h-4 w-4" />
-
-                        </Button>
-
-                        <Button
-                            size="lg"
-                            variant="outline"
-                            className="gap-2"
-                        >
-                            <Play className="h-4 w-4" />
-
-                            Watch Demo
-
-                        </Button>
-
-                    </div>
-
-                    {/* Trust Indicators */}
-                    <div className="mt-12 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-8">
-
-                        <div className="flex items-center gap-2">
-
-                            <CheckCircle2 className="h-5 w-5 text-green-500" />
-
-                            <span className="text-sm text-muted-foreground">
-                                Trusted by 10,000+ Travelers
-                            </span>
-
-                        </div>
-
-                        <div className="flex items-center gap-2">
-
-                            <CheckCircle2 className="h-5 w-5 text-green-500" />
-
-                            <span className="text-sm text-muted-foreground">
-                                AI Itinerary in Under 30 Seconds
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                {/* Right Side */}
-
-                <DashboardMockup />
-
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground">
+                <span>✅ Free to try</span>
+                <span>⭐ Personalized itineraries</span>
+                <span>🌍 Trusted by travelers</span>
             </div>
         </section>
     );
