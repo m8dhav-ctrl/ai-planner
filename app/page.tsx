@@ -1,9 +1,17 @@
+import { Navbar } from "@/components/landing/Navbar";
 import { Hero } from "@/components/landing/Hero";
+import { Features } from "@/components/landing/Features";
+import { CallToAction } from "@/components/landing/CallToAction";
+import { Footer } from "@/components/landing/Footer";
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-background">
+      <Navbar />
       <Hero />
+      <Features />
+      <CallToAction />
+      <Footer />
     </main>
   );
 }
