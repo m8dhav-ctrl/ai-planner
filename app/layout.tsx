@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
-import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 
+import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "sonner";
+
 export const metadata: Metadata = {
-  title: "AI Planner",
-  description: "AI-powered travel planner built with Next.js and Gemini AI.",
+  title: "AI Travel Planner",
+  description: "Plan AI-powered trips effortlessly.",
 };
 
 export default function RootLayout({
@@ -16,7 +18,15 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body>
+
           {children}
+
+          <Toaster
+            position="top-right"
+            richColors
+            closeButton
+          />
+
         </body>
       </html>
     </ClerkProvider>

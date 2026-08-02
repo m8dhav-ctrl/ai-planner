@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { createTrip } from "@/app/actions/trip";
 
 export default function CreateTripPage() {
     return (
@@ -20,21 +21,21 @@ export default function CreateTripPage() {
                         Tell us about your trip and AI Planner will build a personalized itinerary.
                     </p>
 
-                    <form className="mt-8 space-y-6">
-                        {/* Destination */}
+                    <form action={createTrip} className="mt-8 space-y-6">
                         <div>
                             <label className="mb-2 block text-sm font-medium">
                                 Destination
                             </label>
 
                             <input
+                                name="destination"
                                 type="text"
+                                required
                                 placeholder="e.g. Japan"
-                                className="w-full rounded-lg border px-4 py-3 outline-none focus:border-primary"
+                                className="w-full rounded-lg border px-4 py-3"
                             />
                         </div>
 
-                        {/* Dates */}
                         <div className="grid gap-6 md:grid-cols-2">
                             <div>
                                 <label className="mb-2 block text-sm font-medium">
@@ -42,7 +43,9 @@ export default function CreateTripPage() {
                                 </label>
 
                                 <input
+                                    name="startDate"
                                     type="date"
+                                    required
                                     className="w-full rounded-lg border px-4 py-3"
                                 />
                             </div>
@@ -53,53 +56,64 @@ export default function CreateTripPage() {
                                 </label>
 
                                 <input
+                                    name="endDate"
                                     type="date"
+                                    required
                                     className="w-full rounded-lg border px-4 py-3"
                                 />
                             </div>
                         </div>
 
-                        {/* Budget */}
                         <div>
                             <label className="mb-2 block text-sm font-medium">
                                 Budget
                             </label>
 
-                            <select className="w-full rounded-lg border px-4 py-3">
-                                <option>Budget</option>
-                                <option>Mid-range</option>
-                                <option>Luxury</option>
+                            <select
+                                name="budget"
+                                required
+                                className="w-full rounded-lg border px-4 py-3"
+                            >
+                                <option value="">Select Budget</option>
+                                <option value="Budget">Budget</option>
+                                <option value="Mid-range">Mid-range</option>
+                                <option value="Luxury">Luxury</option>
                             </select>
                         </div>
 
-                        {/* Travelers */}
                         <div>
                             <label className="mb-2 block text-sm font-medium">
-                                Number of Travelers
+                                Travelers
                             </label>
 
                             <input
+                                name="travelers"
                                 type="number"
                                 min={1}
                                 defaultValue={2}
+                                required
                                 className="w-full rounded-lg border px-4 py-3"
                             />
                         </div>
 
-                        {/* Preferences */}
                         <div>
                             <label className="mb-2 block text-sm font-medium">
-                                Travel Preferences
+                                Preferences
                             </label>
 
                             <textarea
+                                name="preferences"
                                 rows={4}
-                                placeholder="Adventure, Food, Nature, Beaches..."
                                 className="w-full rounded-lg border px-4 py-3"
+                                placeholder="Adventure, Food, Beaches..."
                             />
                         </div>
 
-                        <Button className="w-full" size="lg">
+                        <Button
+                            type="submit"
+                            className="w-full"
+                            size="lg"
+                        >
                             Create Trip
                         </Button>
                     </form>
