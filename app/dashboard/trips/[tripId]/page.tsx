@@ -3,6 +3,10 @@ import { auth } from "@clerk/nextjs/server";
 import { notFound, redirect } from "next/navigation";
 import DestinationInfoCard from "@/components/trip/destination-info-card";
 import { getDestinationInfo } from "@/lib/destination-info";
+import DestinationGallery from "@/components/trip/destination-gallery";
+import { getDestinationImages } from "@/lib/pexels";
+import ActivityMapLink from "@/components/trip/activity-map-link";
+
 import {
     ArrowLeft,
     Calendar,
@@ -82,6 +86,8 @@ export default async function TripDetailsPage({
     }
     const coordinates = await geocodeLocation(trip.destination);
     const destinationInfo = getDestinationInfo(trip.destination);
+    const destinationImages =
+        await getDestinationImages(trip.destination);
     const nearbyPlaces = coordinates
         ? await getNearbyPlaces(
             coordinates.latitude,
@@ -251,7 +257,10 @@ export default async function TripDetailsPage({
                 ) : (
 
                     <>
-
+                        <DestinationGallery
+                            destination={trip.destination}
+                            images={destinationImages}
+                        />
                         {/* Summary */}
 
                         <div className="mt-10 rounded-3xl border bg-background p-8 shadow-sm">
@@ -351,6 +360,10 @@ export default async function TripDetailsPage({
                                                 <p className="mt-3 text-muted-foreground">
                                                     {activity.description}
                                                 </p>
+                                                <ActivityMapLink
+                                                    activity={activity.activity}
+                                                    destination={trip.destination}
+                                                />
 
                                             </div>
 

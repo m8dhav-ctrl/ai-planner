@@ -4,6 +4,7 @@ import { Map } from "lucide-react";
 
 import TripMap from "./trip-map";
 
+import MapActions from "./map-actions";
 type TripMapCardProps = {
     destination: string;
     latitude: number;
@@ -30,6 +31,7 @@ export default function TripMapCard({
                 latitude={latitude}
                 longitude={longitude}
             />
+            <MapActions destination={destination} />
         </div>
     );
 }
