@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
 import { notFound, redirect } from "next/navigation";
-
+import DestinationInfoCard from "@/components/trip/destination-info-card";
+import { getDestinationInfo } from "@/lib/destination-info";
 import {
     ArrowLeft,
     Calendar,
@@ -13,10 +14,14 @@ import {
     Wallet,
 } from "lucide-react";
 
+import NearbyPlaces from "@/components/maps/nearby-places";
+import { getNearbyPlaces } from "@/lib/overpass";
+
 import { prisma } from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
 import { regenerateItinerary } from "@/app/actions/generate-itinerary";
 import TripMapCard from "@/components/maps/trip-map-card";
+import { geocodeLocation } from "@/lib/geocoding";
 
 type Props = {
     params: Promise<{
@@ -75,6 +80,16 @@ export default async function TripDetailsPage({
                 ? JSON.parse(trip.itinerary)
                 : (trip.itinerary as Itinerary);
     }
+    const coordinates = await geocodeLocation(trip.destination);
+    const destinationInfo = getDestinationInfo(trip.destination);
+    const nearbyPlaces = coordinates
+        ? await getNearbyPlaces(
+            coordinates.latitude,
+            coordinates.longitude
+        )
+        : [];
+    console.log("Coordinates:", coordinates);
+    console.log("Nearby Places:", nearbyPlaces);
 
     return (
         <main className="min-h-screen bg-muted/30">
@@ -277,13 +292,19 @@ export default async function TripDetailsPage({
 
                         </div>
 
-                        <TripMapCard
-                            destination={trip.destination}
-                            latitude={35.6764}
-                            longitude={139.6500}
-                        />
-
-                        {/* Days */}
+                        {coordinates && (
+                            <TripMapCard
+                                destination={trip.destination}
+                                latitude={coordinates.latitude}
+                                longitude={coordinates.longitude}
+                            />
+                        )}
+                        {destinationInfo && (
+                            <DestinationInfoCard
+                                info={destinationInfo}
+                            />
+                        )}
+                        <NearbyPlaces places={nearbyPlaces} />
 
                         {/* Days */}
 
