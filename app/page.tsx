@@ -1,106 +1,45 @@
 import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
-import { UserButton } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
-import { prisma } from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
 
-import StatsCards from "@/components/dashboard/stats-cards";
-import TripsGrid from "@/components/dashboard/trips-grid";
-import EmptyState from "@/components/dashboard/empty-state";
-
-export default async function DashboardPage() {
+export default async function HomePage() {
   const { userId } = await auth();
 
-  if (!userId) {
-    redirect("/sign-in");
+  // If a signed-in user visits the home page,
+  // send them to their dashboard.
+  if (userId) {
+    redirect("/dashboard");
   }
 
-  const trips = await prisma.trip.findMany({
-    where: {
-      clerkUserId: userId,
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
-
-  const today = new Date();
-
-  const totalTrips = trips.length;
-
-  const upcomingTrips = trips.filter(
-    (trip) => trip.startDate >= today
-  ).length;
-
-  const aiTrips = trips.filter(
-    (trip) => Boolean(trip.itinerary)
-  ).length;
-
-  const uniqueDestinations = new Set(
-    trips.map((trip) => trip.destination)
-  ).size;
-
   return (
-    <main className="min-h-screen bg-muted/30">
-      <section className="mx-auto max-w-7xl px-6 py-10">
+    <main className="min-h-screen bg-gradient-to-b from-background to-muted/30">
+      <section className="mx-auto flex max-w-6xl flex-col items-center px-6 py-24 text-center">
 
-        {/* Header */}
+        <h1 className="text-6xl font-extrabold tracking-tight">
+          AI Travel Planner ✈️
+        </h1>
 
-        <div className="mb-12 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+        <p className="mt-6 max-w-2xl text-lg text-muted-foreground">
+          Plan amazing trips in seconds with the power of AI.
+          Generate personalized itineraries, organize your travels,
+          and explore the world effortlessly.
+        </p>
 
-          <div>
+        <div className="mt-10 flex gap-4">
+          <Link href="/sign-up">
+            <Button size="lg">
+              Get Started
+            </Button>
+          </Link>
 
-            <h1 className="text-4xl font-bold">
-              AI Travel Planner ✈️
-            </h1>
-
-            <p className="mt-2 text-muted-foreground">
-              Welcome back! Manage all your AI-generated trips.
-            </p>
-
-          </div>
-
-          <div className="flex items-center gap-4">
-
-            <Link href="/dashboard/create-trip">
-              <Button>
-                + Create Trip
-              </Button>
-            </Link>
-
-            <UserButton afterSignOutUrl="/" />
-
-          </div>
-
+          <Link href="/sign-in">
+            <Button variant="outline" size="lg">
+              Sign In
+            </Button>
+          </Link>
         </div>
-
-        {/* Statistics */}
-
-        <StatsCards
-          totalTrips={totalTrips}
-          upcomingTrips={upcomingTrips}
-          uniqueDestinations={uniqueDestinations}
-          aiTrips={aiTrips}
-        />
-
-        {/* Empty State */}
-
-        {trips.length === 0 ? (
-
-          <EmptyState
-            title="No Trips Yet"
-            description="Create your first AI-powered itinerary and start planning your next adventure."
-            buttonText="Create Your First Trip"
-            buttonHref="/dashboard/create-trip"
-          />
-
-        ) : (
-
-          <TripsGrid trips={trips} />
-
-        )}
 
       </section>
     </main>

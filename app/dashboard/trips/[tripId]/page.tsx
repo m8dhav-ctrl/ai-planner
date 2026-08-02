@@ -16,6 +16,7 @@ import {
 import { prisma } from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
 import { regenerateItinerary } from "@/app/actions/generate-itinerary";
+import TripMapCard from "@/components/maps/trip-map-card";
 
 type Props = {
     params: Promise<{
@@ -275,6 +276,14 @@ export default async function TripDetailsPage({
                             </div>
 
                         </div>
+
+                        <TripMapCard
+                            destination={trip.destination}
+                            latitude={35.6764}
+                            longitude={139.6500}
+                        />
+
+                        {/* Days */}
 
                         {/* Days */}
 
