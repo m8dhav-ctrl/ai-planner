@@ -26,6 +26,7 @@ import { Button } from "@/components/ui/button";
 import { regenerateItinerary } from "@/app/actions/generate-itinerary";
 import TripMapCard from "@/components/maps/trip-map-card";
 import { geocodeLocation } from "@/lib/geocoding";
+import TravelQuickActions from "@/components/trip/travel-quick-actions";
 
 type Props = {
     params: Promise<{
@@ -313,6 +314,9 @@ export default async function TripDetailsPage({
                                 info={destinationInfo}
                             />
                         )}
+                        <TravelQuickActions
+                            destination={trip.destination}
+                        />
                         <NearbyPlaces places={nearbyPlaces} />
 
                         {/* Days */}
