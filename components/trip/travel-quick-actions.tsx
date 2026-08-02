@@ -25,66 +25,49 @@ export default function TravelQuickActions({
 
             <div className="flex flex-wrap gap-4">
 
-                <Button asChild>
-
-                    <a
-                        href={`https://www.google.com/maps/search/?api=1&query=${encoded}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
+                <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${encoded}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <Button>
                         <Map className="mr-2 h-4 w-4" />
                         Google Maps
-                    </a>
+                    </Button>
+                </a>
 
-                </Button>
-
-                <Button
-                    variant="outline"
-                    asChild
+                <a
+                    href={`https://www.openstreetmap.org/search?query=${encoded}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
                 >
-
-                    <a
-                        href={`https://www.openstreetmap.org/search?query=${encoded}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
+                    <Button variant="outline">
                         <Globe className="mr-2 h-4 w-4" />
                         OpenStreetMap
-                    </a>
+                    </Button>
+                </a>
 
-                </Button>
-
-                <Button
-                    variant="outline"
-                    asChild
+                <a
+                    href={`https://www.google.com/search?q=${encoded}+travel`}
+                    target="_blank"
+                    rel="noopener noreferrer"
                 >
-
-                    <a
-                        href={`https://www.google.com/search?q=${encoded}+travel`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
+                    <Button variant="outline">
                         <Search className="mr-2 h-4 w-4" />
                         Google Search
-                    </a>
+                    </Button>
+                </a>
 
-                </Button>
-
-                <Button
-                    variant="outline"
-                    asChild
+                <a
+                    href={`https://en.wikipedia.org/wiki/${encoded}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
                 >
-
-                    <a
-                        href={`https://en.wikipedia.org/wiki/${encoded}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
+                    <Button variant="outline">
                         <ExternalLink className="mr-2 h-4 w-4" />
                         Wikipedia
-                    </a>
-
-                </Button>
+                    </Button>
+                </a>
 
             </div>
 

@@ -95,8 +95,6 @@ export default async function TripDetailsPage({
             coordinates.longitude
         )
         : [];
-    console.log("Coordinates:", coordinates);
-    console.log("Nearby Places:", nearbyPlaces);
 
     return (
         <main className="min-h-screen bg-muted/30">
