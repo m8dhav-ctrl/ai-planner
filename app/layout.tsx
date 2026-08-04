@@ -15,10 +15,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body>
-
+    <html lang="en">
+      <body>
+        <ClerkProvider>
           {children}
 
           <Toaster
@@ -26,9 +25,8 @@ export default function RootLayout({
             richColors
             closeButton
           />
-
-        </body>
-      </html>
-    </ClerkProvider>
+        </ClerkProvider>
+      </body>
+    </html>
   );
 }

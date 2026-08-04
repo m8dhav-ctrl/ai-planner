@@ -1,7 +1,9 @@
 export type DestinationInfo = {
     language: string;
     currency: string;
+    currencyCode: string;
     timeZone: string;
+    utcOffset: string;
     powerPlug: string;
     emergency: string;
     bestSeason: string;
@@ -10,8 +12,10 @@ export type DestinationInfo = {
 const destinationData: Record<string, DestinationInfo> = {
     japan: {
         language: "Japanese",
-        currency: "Japanese Yen (JPY)",
-        timeZone: "JST (UTC +9)",
+        currency: "Japanese Yen",
+        currencyCode: "JPY",
+        timeZone: "Japan Standard Time",
+        utcOffset: "UTC +9",
         powerPlug: "Type A / Type B",
         emergency: "110 (Police) • 119 (Fire & Ambulance)",
         bestSeason: "March–May • October–November",
@@ -19,8 +23,10 @@ const destinationData: Record<string, DestinationInfo> = {
 
     france: {
         language: "French",
-        currency: "Euro (EUR)",
-        timeZone: "CET (UTC +1)",
+        currency: "Euro",
+        currencyCode: "EUR",
+        timeZone: "Central European Time",
+        utcOffset: "UTC +1",
         powerPlug: "Type C / Type E",
         emergency: "112",
         bestSeason: "April–June • September–October",
@@ -28,8 +34,10 @@ const destinationData: Record<string, DestinationInfo> = {
 
     italy: {
         language: "Italian",
-        currency: "Euro (EUR)",
-        timeZone: "CET (UTC +1)",
+        currency: "Euro",
+        currencyCode: "EUR",
+        timeZone: "Central European Time",
+        utcOffset: "UTC +1",
         powerPlug: "Type C / Type F / Type L",
         emergency: "112",
         bestSeason: "April–June • September",
@@ -37,8 +45,10 @@ const destinationData: Record<string, DestinationInfo> = {
 
     switzerland: {
         language: "German, French, Italian",
-        currency: "Swiss Franc (CHF)",
-        timeZone: "CET (UTC +1)",
+        currency: "Swiss Franc",
+        currencyCode: "CHF",
+        timeZone: "Central European Time",
+        utcOffset: "UTC +1",
         powerPlug: "Type J",
         emergency: "112",
         bestSeason: "June–September • December–February",
@@ -46,8 +56,10 @@ const destinationData: Record<string, DestinationInfo> = {
 
     india: {
         language: "Hindi, English",
-        currency: "Indian Rupee (INR)",
-        timeZone: "IST (UTC +5:30)",
+        currency: "Indian Rupee",
+        currencyCode: "INR",
+        timeZone: "India Standard Time",
+        utcOffset: "UTC +5:30",
         powerPlug: "Type C / D / M",
         emergency: "112",
         bestSeason: "October–March",
@@ -55,8 +67,10 @@ const destinationData: Record<string, DestinationInfo> = {
 
     usa: {
         language: "English",
-        currency: "US Dollar (USD)",
+        currency: "US Dollar",
+        currencyCode: "USD",
         timeZone: "Multiple Time Zones",
+        utcOffset: "UTC -5 to UTC -10",
         powerPlug: "Type A / Type B",
         emergency: "911",
         bestSeason: "Varies by region",

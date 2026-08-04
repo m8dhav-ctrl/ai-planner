@@ -6,6 +6,9 @@ import { getDestinationInfo } from "@/lib/destination-info";
 import DestinationGallery from "@/components/trip/destination-gallery";
 import { getDestinationImages } from "@/lib/pexels";
 import ActivityMapLink from "@/components/trip/activity-map-link";
+import WeatherCard from "@/components/trip/weather-card";
+import { getWeather } from "@/lib/weather";
+import HotelSearchCard from "@/components/trip/hotel-search-card";
 
 import {
     ArrowLeft,
@@ -86,6 +89,13 @@ export default async function TripDetailsPage({
                 : (trip.itinerary as Itinerary);
     }
     const coordinates = await geocodeLocation(trip.destination);
+    const weather =
+        coordinates
+            ? await getWeather(
+                coordinates.latitude,
+                coordinates.longitude
+            )
+            : null;
     const destinationInfo = getDestinationInfo(trip.destination);
     const destinationImages =
         await getDestinationImages(trip.destination);
@@ -312,10 +322,19 @@ export default async function TripDetailsPage({
                                 info={destinationInfo}
                             />
                         )}
+                        {weather && (
+                            <WeatherCard
+                                weather={weather}
+                            />
+                        )}
                         <TravelQuickActions
                             destination={trip.destination}
                         />
                         <NearbyPlaces places={nearbyPlaces} />
+                        <HotelSearchCard
+                            destination={trip.destination}
+                        />
+
 
                         {/* Days */}
 

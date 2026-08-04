@@ -2,9 +2,11 @@ import {
     CalendarDays,
     Coins,
     Globe,
+    Languages,
     Plug,
     ShieldAlert,
-    Languages,
+    Clock3,
+    BadgeDollarSign,
 } from "lucide-react";
 
 import { DestinationInfo } from "@/lib/destination-info";
@@ -18,11 +20,12 @@ export default function DestinationInfoCard({
 }: DestinationInfoCardProps) {
     return (
         <div className="mt-10 rounded-3xl border bg-background p-8 shadow-sm">
+
             <h2 className="mb-8 text-3xl font-bold">
                 🌍 Destination Information
             </h2>
 
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
 
                 <div className="flex items-start gap-3">
                     <Languages className="mt-1 h-5 w-5 text-blue-600" />
@@ -49,6 +52,18 @@ export default function DestinationInfoCard({
                 </div>
 
                 <div className="flex items-start gap-3">
+                    <BadgeDollarSign className="mt-1 h-5 w-5 text-emerald-600" />
+                    <div>
+                        <p className="text-sm text-muted-foreground">
+                            Currency Code
+                        </p>
+                        <p className="font-semibold">
+                            {info.currencyCode}
+                        </p>
+                    </div>
+                </div>
+
+                <div className="flex items-start gap-3">
                     <Globe className="mt-1 h-5 w-5 text-purple-600" />
                     <div>
                         <p className="text-sm text-muted-foreground">
@@ -56,6 +71,18 @@ export default function DestinationInfoCard({
                         </p>
                         <p className="font-semibold">
                             {info.timeZone}
+                        </p>
+                    </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                    <Clock3 className="mt-1 h-5 w-5 text-indigo-600" />
+                    <div>
+                        <p className="text-sm text-muted-foreground">
+                            UTC Offset
+                        </p>
+                        <p className="font-semibold">
+                            {info.utcOffset}
                         </p>
                     </div>
                 </div>
@@ -97,6 +124,7 @@ export default function DestinationInfoCard({
                 </div>
 
             </div>
+
         </div>
     );
 }
