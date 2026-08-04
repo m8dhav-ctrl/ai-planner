@@ -330,6 +330,9 @@ export default async function TripDetailsPage({
                         <TravelQuickActions
                             destination={trip.destination}
                         />
+                        <HotelSearchCard
+                            destination={trip.destination}
+                        />
                         <NearbyPlaces places={nearbyPlaces} />
                         <HotelSearchCard
                             destination={trip.destination}
