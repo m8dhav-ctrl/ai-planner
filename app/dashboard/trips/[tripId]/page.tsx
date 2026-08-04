@@ -334,10 +334,6 @@ export default async function TripDetailsPage({
                             destination={trip.destination}
                         />
                         <NearbyPlaces places={nearbyPlaces} />
-                        <HotelSearchCard
-                            destination={trip.destination}
-                        />
-
 
                         {/* Days */}
 
