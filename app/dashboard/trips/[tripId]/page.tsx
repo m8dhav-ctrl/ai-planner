@@ -9,6 +9,10 @@ import ActivityMapLink from "@/components/trip/activity-map-link";
 import WeatherCard from "@/components/trip/weather-card";
 import { getWeather } from "@/lib/weather";
 import HotelSearchCard from "@/components/trip/hotel-search-card";
+import BudgetCard from "@/components/trip/budget-card";
+import { calculateBudget } from "@/lib/budget";
+import PackingChecklist from "@/components/trip/packing-checklist";
+import { generatePackingList } from "@/lib/packing";
 
 import {
     ArrowLeft,
@@ -105,6 +109,24 @@ export default async function TripDetailsPage({
             coordinates.longitude
         )
         : [];
+    const budgetBreakdown = calculateBudget(
+        trip.budget,
+        itinerary?.tripSummary?.totalDays ??
+        Math.ceil(
+            (trip.endDate.getTime() - trip.startDate.getTime()) /
+            (1000 * 60 * 60 * 24)
+        ) + 1,
+        trip.travelers
+    );
+    const packingList = generatePackingList(
+        trip.destination,
+        itinerary?.tripSummary?.totalDays ??
+        Math.ceil(
+            (trip.endDate.getTime() - trip.startDate.getTime()) /
+            (1000 * 60 * 60 * 24)
+        ) + 1,
+        weather?.temperature ?? null
+    );
 
     return (
         <main className="min-h-screen bg-muted/30">
@@ -333,6 +355,14 @@ export default async function TripDetailsPage({
                         <HotelSearchCard
                             destination={trip.destination}
                         />
+                        <BudgetCard
+                            budget={budgetBreakdown}
+                        />
+
+                        <PackingChecklist
+                            items={packingList}
+                        />
+
                         <NearbyPlaces places={nearbyPlaces} />
 
                         {/* Days */}
