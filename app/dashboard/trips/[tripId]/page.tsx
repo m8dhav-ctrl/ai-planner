@@ -13,6 +13,7 @@ import BudgetCard from "@/components/trip/budget-card";
 import { calculateBudget } from "@/lib/budget";
 import PackingChecklist from "@/components/trip/packing-checklist";
 import { generatePackingList } from "@/lib/packing";
+import ExportPdfButton from "@/components/trip/export-pdf-button";
 
 import {
     ArrowLeft,
@@ -134,14 +135,27 @@ export default async function TripDetailsPage({
 
                 {/* Header */}
 
-                <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div className="flex flex-wrap items-center gap-3">
 
-                    <Link href="/dashboard">
-                        <Button variant="outline">
-                            <ArrowLeft className="mr-2 h-4 w-4" />
-                            Back
-                        </Button>
-                    </Link>
+                    {itinerary && (
+                        <ExportPdfButton
+                            tripSummary={{
+                                destination: itinerary.tripSummary?.destination ?? trip.destination,
+                                budget: itinerary.tripSummary?.budget ?? trip.budget,
+                                travelers: itinerary.tripSummary?.travelers ?? trip.travelers,
+                                totalDays:
+                                    itinerary.tripSummary?.totalDays ??
+                                    Math.ceil(
+                                        (trip.endDate.getTime() - trip.startDate.getTime()) /
+                                        (1000 * 60 * 60 * 24)
+                                    ) +
+                                    1,
+                            }}
+                            budget={budgetBreakdown}
+                            packingList={packingList}
+                            itinerary={itinerary.days ?? []}
+                        />
+                    )}
 
                     <form action={regenerateItinerary}>
                         <input
