@@ -14,6 +14,9 @@ import { calculateBudget } from "@/lib/budget";
 import PackingChecklist from "@/components/trip/packing-checklist";
 import { generatePackingList } from "@/lib/packing";
 import ExportPdfButton from "@/components/trip/export-pdf-button";
+import PrintButton from "@/components/trip/print-button";
+import TripActions from "@/components/trip/trip-actions";
+import ShareTripButton from "@/components/trip/share-trip-button";
 
 import {
     ArrowLeft,
@@ -138,23 +141,37 @@ export default async function TripDetailsPage({
                 <div className="flex flex-wrap items-center gap-3">
 
                     {itinerary && (
-                        <ExportPdfButton
-                            tripSummary={{
-                                destination: itinerary.tripSummary?.destination ?? trip.destination,
-                                budget: itinerary.tripSummary?.budget ?? trip.budget,
-                                travelers: itinerary.tripSummary?.travelers ?? trip.travelers,
-                                totalDays:
-                                    itinerary.tripSummary?.totalDays ??
-                                    Math.ceil(
-                                        (trip.endDate.getTime() - trip.startDate.getTime()) /
-                                        (1000 * 60 * 60 * 24)
-                                    ) +
-                                    1,
-                            }}
-                            budget={budgetBreakdown}
-                            packingList={packingList}
-                            itinerary={itinerary.days ?? []}
-                        />
+                        <>
+                            <ExportPdfButton
+                                tripSummary={{
+                                    destination:
+                                        itinerary.tripSummary?.destination ??
+                                        trip.destination,
+                                    budget:
+                                        itinerary.tripSummary?.budget ??
+                                        trip.budget,
+                                    travelers:
+                                        itinerary.tripSummary?.travelers ??
+                                        trip.travelers,
+                                    totalDays:
+                                        itinerary.tripSummary?.totalDays ??
+                                        Math.ceil(
+                                            (trip.endDate.getTime() -
+                                                trip.startDate.getTime()) /
+                                            (1000 * 60 * 60 * 24)
+                                        ) + 1,
+                                }}
+                                budget={budgetBreakdown}
+                                packingList={packingList}
+                                itinerary={itinerary.days ?? []}
+                            />
+
+                            <PrintButton />
+
+                            <ShareTripButton
+                                destination={trip.destination}
+                            />
+                        </>
                     )}
 
                     <form action={regenerateItinerary}>
@@ -177,19 +194,35 @@ export default async function TripDetailsPage({
 
                 {/* Trip Card */}
 
-                <div className="mt-8 rounded-3xl border bg-background p-8 shadow-sm">
+                <div className="mt-8 overflow-hidden rounded-3xl border bg-gradient-to-br from-sky-50 via-white to-blue-50 p-10 shadow-lg dark:from-slate-900 dark:via-slate-950 dark:to-slate-900">
 
-                    <div className="flex items-center gap-3">
+                    <div>
 
-                        <MapPin className="h-8 w-8 text-blue-600" />
+                        <div className="flex items-center gap-3">
 
-                        <h1 className="text-4xl font-bold">
-                            {trip.destination}
-                        </h1>
+                            <div className="rounded-full bg-blue-100 p-3 dark:bg-blue-950">
+
+                                <MapPin className="h-7 w-7 text-blue-600" />
+
+                            </div>
+
+                            <div>
+
+                                <h1 className="text-5xl font-extrabold tracking-tight">
+                                    {trip.destination}
+                                </h1>
+
+                                <p className="mt-2 text-lg text-muted-foreground">
+                                    Plan your perfect AI-powered journey ✨
+                                </p>
+
+                            </div>
+
+                        </div>
 
                     </div>
 
-                    <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+                    <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
 
                         <div className="flex items-center gap-3">
 

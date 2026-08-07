@@ -1,10 +1,22 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { Map } from "lucide-react";
 
-import TripMap from "./trip-map";
-
 import MapActions from "./map-actions";
+
+const TripMap = dynamic(
+    () => import("./trip-map"),
+    {
+        ssr: false,
+        loading: () => (
+            <div className="flex h-[450px] items-center justify-center rounded-2xl bg-muted">
+                Loading map...
+            </div>
+        ),
+    }
+);
+
 type TripMapCardProps = {
     destination: string;
     latitude: number;
@@ -19,7 +31,7 @@ export default function TripMapCard({
     return (
         <div className="mt-10 rounded-3xl border bg-background p-8 shadow-sm">
             <div className="mb-6 flex items-center gap-3">
-                <Map className="h-6 w-6 text-blue-600" />
+                <Map className="h-7 w-7 text-blue-600" />
 
                 <h2 className="text-3xl font-bold">
                     Destination Map
@@ -31,6 +43,7 @@ export default function TripMapCard({
                 latitude={latitude}
                 longitude={longitude}
             />
+
             <MapActions destination={destination} />
         </div>
     );
