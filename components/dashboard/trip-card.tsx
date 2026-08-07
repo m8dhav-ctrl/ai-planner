@@ -118,7 +118,10 @@ export default function TripCard({
 
             <div className="mt-8 grid gap-3">
                 <Link href={`/dashboard/trips/${trip.id}`}>
-                    <Button className="w-full">
+                    <Button
+                        variant="outline"
+                        className="w-full"
+                    >
                         View Trip
                     </Button>
                 </Link>

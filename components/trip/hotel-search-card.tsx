@@ -5,6 +5,8 @@ import {
     ExternalLink,
 } from "lucide-react";
 
+import FeatureCard from "@/components/ui/feature-card";
+import SectionHeader from "@/components/ui/section-header";
 import { Button } from "@/components/ui/button";
 
 type Props = {
@@ -17,11 +19,12 @@ export default function HotelSearchCard({
     const encoded = encodeURIComponent(destination);
 
     return (
-        <div className="mt-10 rounded-3xl border bg-background p-8 shadow-sm">
-
-            <h2 className="mb-6 text-3xl font-bold">
-                🏨 Hotel Booking
-            </h2>
+        <FeatureCard>
+            <SectionHeader
+                icon={<Hotel className="h-6 w-6" />}
+                title="Hotel Booking"
+                description="Compare hotel prices across popular booking platforms"
+            />
 
             <div className="grid gap-4 md:grid-cols-2">
 
@@ -76,7 +79,6 @@ export default function HotelSearchCard({
                 </a>
 
             </div>
-
-        </div>
+        </FeatureCard>
     );
 }

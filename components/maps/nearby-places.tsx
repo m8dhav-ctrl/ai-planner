@@ -5,6 +5,9 @@ import {
     UtensilsCrossed,
 } from "lucide-react";
 
+import FeatureCard from "@/components/ui/feature-card";
+import SectionHeader from "@/components/ui/section-header";
+
 import { NearbyPlace } from "@/lib/overpass";
 
 type NearbyPlacesProps = {
@@ -26,37 +29,41 @@ export default function NearbyPlaces({
     }
 
     return (
-        <div className="mt-10 rounded-3xl border bg-background p-8 shadow-sm">
-            <h2 className="mb-6 text-3xl font-bold">
-                Nearby Places
-            </h2>
+        <FeatureCard>
+            <SectionHeader
+                icon={<MapPinned className="h-6 w-6" />}
+                title="Nearby Places"
+                description="Explore restaurants, cafés, hotels and attractions nearby"
+            />
 
             <div className="grid gap-4 md:grid-cols-2">
                 {places.map((place) => (
                     <div
                         key={place.id}
-                        className="flex items-start gap-4 rounded-2xl border p-5 transition hover:shadow-md"
+                        className="rounded-2xl border bg-muted/20 p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
                     >
-                        <div className="mt-1">
-                            {categoryIcons[
-                                place.category as keyof typeof categoryIcons
-                            ] ?? (
-                                    <MapPinned className="h-5 w-5 text-gray-500" />
-                                )}
-                        </div>
+                        <div className="flex items-center gap-4">
+                            <div>
+                                {categoryIcons[
+                                    place.category as keyof typeof categoryIcons
+                                ] ?? (
+                                        <MapPinned className="h-5 w-5 text-gray-500" />
+                                    )}
+                            </div>
 
-                        <div>
-                            <h3 className="font-semibold">
-                                {place.name}
-                            </h3>
+                            <div>
+                                <h3 className="font-semibold">
+                                    {place.name}
+                                </h3>
 
-                            <p className="mt-1 text-sm capitalize text-muted-foreground">
-                                {place.category}
-                            </p>
+                                <p className="mt-1 text-sm capitalize text-muted-foreground">
+                                    {place.category}
+                                </p>
+                            </div>
                         </div>
                     </div>
                 ))}
             </div>
-        </div>
+        </FeatureCard>
     );
 }

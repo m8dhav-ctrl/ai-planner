@@ -17,6 +17,9 @@ import ExportPdfButton from "@/components/trip/export-pdf-button";
 import PrintButton from "@/components/trip/print-button";
 import TripActions from "@/components/trip/trip-actions";
 import ShareTripButton from "@/components/trip/share-trip-button";
+import FadeIn from "@/components/animations/fade-in";
+import StaggerContainer from "@/components/animations/stagger-container";
+import StaggerItem from "@/components/animations/stagger-item";
 
 import {
     ArrowLeft,
@@ -134,351 +137,361 @@ export default async function TripDetailsPage({
 
     return (
         <main className="min-h-screen bg-muted/30">
-            <section className="mx-auto max-w-6xl px-6 py-10">
+            <FadeIn>
+                <section className="mx-auto max-w-6xl px-6 py-10">
 
-                {/* Header */}
+                    {/* Header */}
 
-                <div className="flex flex-wrap items-center gap-3">
+                    <div className="flex flex-wrap items-center gap-3">
 
-                    {itinerary && (
-                        <>
-                            <ExportPdfButton
-                                tripSummary={{
-                                    destination:
-                                        itinerary.tripSummary?.destination ??
-                                        trip.destination,
-                                    budget:
-                                        itinerary.tripSummary?.budget ??
-                                        trip.budget,
-                                    travelers:
-                                        itinerary.tripSummary?.travelers ??
-                                        trip.travelers,
-                                    totalDays:
-                                        itinerary.tripSummary?.totalDays ??
-                                        Math.ceil(
-                                            (trip.endDate.getTime() -
-                                                trip.startDate.getTime()) /
-                                            (1000 * 60 * 60 * 24)
-                                        ) + 1,
-                                }}
-                                budget={budgetBreakdown}
-                                packingList={packingList}
-                                itinerary={itinerary.days ?? []}
+                        {itinerary && (
+                            <>
+                                <ExportPdfButton
+                                    tripSummary={{
+                                        destination:
+                                            itinerary.tripSummary?.destination ??
+                                            trip.destination,
+                                        budget:
+                                            itinerary.tripSummary?.budget ??
+                                            trip.budget,
+                                        travelers:
+                                            itinerary.tripSummary?.travelers ??
+                                            trip.travelers,
+                                        totalDays:
+                                            itinerary.tripSummary?.totalDays ??
+                                            Math.ceil(
+                                                (trip.endDate.getTime() -
+                                                    trip.startDate.getTime()) /
+                                                (1000 * 60 * 60 * 24)
+                                            ) + 1,
+                                    }}
+                                    budget={budgetBreakdown}
+                                    packingList={packingList}
+                                    itinerary={itinerary.days ?? []}
+                                />
+
+                                <PrintButton />
+
+                                <ShareTripButton
+                                    destination={trip.destination}
+                                />
+                            </>
+                        )}
+
+                        <form action={regenerateItinerary}>
+                            <input
+                                type="hidden"
+                                name="tripId"
+                                value={trip.id}
                             />
 
-                            <PrintButton />
+                            <Button type="submit">
+                                <RefreshCw className="mr-2 h-4 w-4" />
 
-                            <ShareTripButton
-                                destination={trip.destination}
-                            />
-                        </>
-                    )}
-
-                    <form action={regenerateItinerary}>
-                        <input
-                            type="hidden"
-                            name="tripId"
-                            value={trip.id}
-                        />
-
-                        <Button type="submit">
-                            <RefreshCw className="mr-2 h-4 w-4" />
-
-                            {itinerary
-                                ? "Regenerate AI Itinerary"
-                                : "Generate AI Itinerary"}
-                        </Button>
-                    </form>
-
-                </div>
-
-                {/* Trip Card */}
-
-                <div className="mt-8 overflow-hidden rounded-3xl border bg-gradient-to-br from-sky-50 via-white to-blue-50 p-10 shadow-lg dark:from-slate-900 dark:via-slate-950 dark:to-slate-900">
-
-                    <div>
-
-                        <div className="flex items-center gap-3">
-
-                            <div className="rounded-full bg-blue-100 p-3 dark:bg-blue-950">
-
-                                <MapPin className="h-7 w-7 text-blue-600" />
-
-                            </div>
-
-                            <div>
-
-                                <h1 className="text-5xl font-extrabold tracking-tight">
-                                    {trip.destination}
-                                </h1>
-
-                                <p className="mt-2 text-lg text-muted-foreground">
-                                    Plan your perfect AI-powered journey ✨
-                                </p>
-
-                            </div>
-
-                        </div>
+                                {itinerary
+                                    ? "Regenerate AI Itinerary"
+                                    : "Generate AI Itinerary"}
+                            </Button>
+                        </form>
 
                     </div>
 
-                    <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+                    {/* Trip Card */}
 
-                        <div className="flex items-center gap-3">
+                    <div className="mt-8 overflow-hidden rounded-3xl border bg-gradient-to-br from-sky-50 via-white to-blue-50 p-10 shadow-lg dark:from-slate-900 dark:via-slate-950 dark:to-slate-900">
 
-                            <Calendar className="h-5 w-5 text-blue-600" />
+                        <div>
 
-                            <div>
+                            <div className="flex items-center gap-3">
 
-                                <p className="text-xs uppercase text-muted-foreground">
-                                    Start
-                                </p>
+                                <div className="rounded-full bg-blue-100 p-3 dark:bg-blue-950">
 
-                                <p className="font-semibold">
-                                    {trip.startDate.toLocaleDateString()}
-                                </p>
+                                    <MapPin className="h-7 w-7 text-blue-600" />
 
-                            </div>
+                                </div>
 
-                        </div>
+                                <div>
 
-                        <div className="flex items-center gap-3">
+                                    <h1 className="text-5xl font-extrabold tracking-tight">
+                                        {trip.destination}
+                                    </h1>
 
-                            <Calendar className="h-5 w-5 text-green-600" />
+                                    <p className="mt-2 text-lg text-muted-foreground">
+                                        Plan your perfect AI-powered journey ✨
+                                    </p>
 
-                            <div>
-
-                                <p className="text-xs uppercase text-muted-foreground">
-                                    End
-                                </p>
-
-                                <p className="font-semibold">
-                                    {trip.endDate.toLocaleDateString()}
-                                </p>
+                                </div>
 
                             </div>
 
                         </div>
 
-                        <div className="flex items-center gap-3">
+                        <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
 
-                            <Wallet className="h-5 w-5 text-yellow-600" />
+                            <div className="flex items-center gap-3">
 
-                            <div>
+                                <Calendar className="h-5 w-5 text-blue-600" />
 
-                                <p className="text-xs uppercase text-muted-foreground">
-                                    Budget
-                                </p>
+                                <div>
 
-                                <p className="font-semibold">
-                                    {trip.budget}
-                                </p>
+                                    <p className="text-xs uppercase text-muted-foreground">
+                                        Start
+                                    </p>
+
+                                    <p className="font-semibold">
+                                        {trip.startDate.toLocaleDateString()}
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                            <div className="flex items-center gap-3">
+
+                                <Calendar className="h-5 w-5 text-green-600" />
+
+                                <div>
+
+                                    <p className="text-xs uppercase text-muted-foreground">
+                                        End
+                                    </p>
+
+                                    <p className="font-semibold">
+                                        {trip.endDate.toLocaleDateString()}
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                            <div className="flex items-center gap-3">
+
+                                <Wallet className="h-5 w-5 text-yellow-600" />
+
+                                <div>
+
+                                    <p className="text-xs uppercase text-muted-foreground">
+                                        Budget
+                                    </p>
+
+                                    <p className="font-semibold">
+                                        {trip.budget}
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                            <div className="flex items-center gap-3">
+
+                                <Users className="h-5 w-5 text-purple-600" />
+
+                                <div>
+
+                                    <p className="text-xs uppercase text-muted-foreground">
+                                        Travelers
+                                    </p>
+
+                                    <p className="font-semibold">
+                                        {trip.travelers}
+                                    </p>
+
+                                </div>
 
                             </div>
 
                         </div>
 
-                        <div className="flex items-center gap-3">
+                        {trip.preferences && (
 
-                            <Users className="h-5 w-5 text-purple-600" />
+                            <div className="mt-8">
 
-                            <div>
+                                <h2 className="font-semibold">
+                                    Preferences
+                                </h2>
 
-                                <p className="text-xs uppercase text-muted-foreground">
-                                    Travelers
-                                </p>
-
-                                <p className="font-semibold">
-                                    {trip.travelers}
+                                <p className="mt-3 whitespace-pre-line text-muted-foreground">
+                                    {trip.preferences}
                                 </p>
 
                             </div>
 
-                        </div>
+                        )}
 
                     </div>
 
-                    {trip.preferences && (
+                    {!itinerary ? (
 
-                        <div className="mt-8">
+                        <div className="mt-10 rounded-3xl border bg-background p-12 text-center shadow-sm">
 
-                            <h2 className="font-semibold">
-                                Preferences
+                            <Sparkles className="mx-auto h-12 w-12 text-blue-600" />
+
+                            <h2 className="mt-6 text-2xl font-bold">
+                                No AI Itinerary Yet
                             </h2>
 
-                            <p className="mt-3 whitespace-pre-line text-muted-foreground">
-                                {trip.preferences}
+                            <p className="mt-3 text-muted-foreground">
+                                Generate an itinerary to see your personalized day-by-day travel plan.
                             </p>
 
                         </div>
 
-                    )}
+                    ) : (
 
-                </div>
-
-                {!itinerary ? (
-
-                    <div className="mt-10 rounded-3xl border bg-background p-12 text-center shadow-sm">
-
-                        <Sparkles className="mx-auto h-12 w-12 text-blue-600" />
-
-                        <h2 className="mt-6 text-2xl font-bold">
-                            No AI Itinerary Yet
-                        </h2>
-
-                        <p className="mt-3 text-muted-foreground">
-                            Generate an itinerary to see your personalized day-by-day travel plan.
-                        </p>
-
-                    </div>
-
-                ) : (
-
-                    <>
-                        <DestinationGallery
-                            destination={trip.destination}
-                            images={destinationImages}
-                        />
-                        {/* Summary */}
-
-                        <div className="mt-10 rounded-3xl border bg-background p-8 shadow-sm">
-
-                            <div className="flex items-center gap-3">
-
-                                <Sparkles className="h-6 w-6 text-blue-600" />
-
-                                <h2 className="text-3xl font-bold">
-                                    Trip Summary
-                                </h2>
-
-                            </div>
-
-                            <div className="mt-8 grid gap-6 md:grid-cols-2">
-
-                                <div>
-                                    <strong>Destination:</strong>{" "}
-                                    {itinerary.tripSummary?.destination}
-                                </div>
-
-                                <div>
-                                    <strong>Total Days:</strong>{" "}
-                                    {itinerary.tripSummary?.totalDays}
-                                </div>
-
-                                <div>
-                                    <strong>Budget:</strong>{" "}
-                                    {itinerary.tripSummary?.budget}
-                                </div>
-
-                                <div>
-                                    <strong>Travelers:</strong>{" "}
-                                    {itinerary.tripSummary?.travelers}
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        {coordinates && (
-                            <TripMapCard
+                        <>
+                            <DestinationGallery
                                 destination={trip.destination}
-                                latitude={coordinates.latitude}
-                                longitude={coordinates.longitude}
+                                images={destinationImages}
                             />
-                        )}
-                        {destinationInfo && (
-                            <DestinationInfoCard
-                                info={destinationInfo}
-                            />
-                        )}
-                        {weather && (
-                            <WeatherCard
-                                weather={weather}
-                            />
-                        )}
-                        <TravelQuickActions
-                            destination={trip.destination}
-                        />
-                        <HotelSearchCard
-                            destination={trip.destination}
-                        />
-                        <BudgetCard
-                            budget={budgetBreakdown}
-                        />
+                            {/* Summary */}
 
-                        <PackingChecklist
-                            items={packingList}
-                        />
+                            <div className="mt-10 rounded-3xl border bg-background p-8 shadow-sm">
 
-                        <NearbyPlaces places={nearbyPlaces} />
+                                <div className="flex items-center gap-3">
 
-                        {/* Days */}
-
-                        <div className="mt-10 space-y-8">
-
-                            {itinerary.days?.map((day) => (
-
-                                <div
-                                    key={day.day}
-                                    className="rounded-3xl border bg-background p-8 shadow-sm"
-                                >
+                                    <Sparkles className="h-6 w-6 text-blue-600" />
 
                                     <h2 className="text-3xl font-bold">
-                                        Day {day.day}
+                                        Trip Summary
                                     </h2>
 
-                                    <p className="mt-2 text-xl font-semibold text-blue-600">
-                                        {day.title}
-                                    </p>
+                                </div>
 
-                                    <div className="mt-8 space-y-5">
+                                <div className="mt-8 grid gap-6 md:grid-cols-2">
 
-                                        {day.activities.map((activity, index) => (
+                                    <div>
+                                        <strong>Destination:</strong>{" "}
+                                        {itinerary.tripSummary?.destination}
+                                    </div>
 
-                                            <div
-                                                key={index}
-                                                className="rounded-2xl border p-6 transition hover:shadow-md"
-                                            >
+                                    <div>
+                                        <strong>Total Days:</strong>{" "}
+                                        {itinerary.tripSummary?.totalDays}
+                                    </div>
 
-                                                <div className="flex items-center gap-2">
+                                    <div>
+                                        <strong>Budget:</strong>{" "}
+                                        {itinerary.tripSummary?.budget}
+                                    </div>
 
-                                                    <Clock className="h-4 w-4 text-blue-600" />
-
-                                                    <span className="font-semibold">
-                                                        {activity.time}
-                                                    </span>
-
-                                                </div>
-
-                                                <h3 className="mt-4 text-lg font-semibold">
-                                                    {activity.activity}
-                                                </h3>
-
-                                                <p className="mt-3 text-muted-foreground">
-                                                    {activity.description}
-                                                </p>
-                                                <ActivityMapLink
-                                                    activity={activity.activity}
-                                                    destination={trip.destination}
-                                                />
-
-                                            </div>
-
-                                        ))}
-
+                                    <div>
+                                        <strong>Travelers:</strong>{" "}
+                                        {itinerary.tripSummary?.travelers}
                                     </div>
 
                                 </div>
 
-                            ))}
+                            </div>
 
-                        </div>
+                            {coordinates && (
+                                <TripMapCard
+                                    destination={trip.destination}
+                                    latitude={coordinates.latitude}
+                                    longitude={coordinates.longitude}
+                                />
+                            )}
+                            {destinationInfo && (
+                                <DestinationInfoCard
+                                    info={destinationInfo}
+                                />
+                            )}
+                            {weather && (
+                                <WeatherCard
+                                    weather={weather}
+                                />
+                            )}
+                            <TravelQuickActions
+                                destination={trip.destination}
+                            />
+                            <HotelSearchCard
+                                destination={trip.destination}
+                            />
+                            <BudgetCard
+                                budget={budgetBreakdown}
+                            />
 
-                    </>
+                            <PackingChecklist
+                                items={packingList}
+                            />
 
-                )}
+                            <NearbyPlaces places={nearbyPlaces} />
 
-            </section>
+                            {/* Days */}
+
+                            <div className="mt-10 space-y-8">
+
+                                {itinerary.days?.map((day) => (
+
+                                    <div
+                                        key={day.day}
+                                        className="rounded-3xl border bg-background p-8 shadow-md transition-shadow duration-300 hover:shadow-lg"
+                                    >
+
+                                        <div className="flex items-center justify-between">
+
+                                            <div>
+
+                                                <p className="text-sm font-medium uppercase tracking-widest text-blue-600">
+                                                    Day {day.day}
+                                                </p>
+
+                                                <h2 className="mt-2 text-3xl font-bold">
+                                                    {day.title}
+                                                </h2>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div className="mt-8 space-y-5">
+
+                                            {day.activities.map((activity, index) => (
+
+                                                <div
+                                                    key={index}
+                                                    className="rounded-2xl border bg-muted/20 p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                                                >
+
+                                                    <div className="flex items-center gap-2">
+
+                                                        <Clock className="h-4 w-4 text-blue-600" />
+
+                                                        <span className="font-semibold">
+                                                            {activity.time}
+                                                        </span>
+
+                                                    </div>
+
+                                                    <h3 className="mt-4 text-lg font-semibold">
+                                                        {activity.activity}
+                                                    </h3>
+
+                                                    <p className="mt-3 text-muted-foreground">
+                                                        {activity.description}
+                                                    </p>
+                                                    <ActivityMapLink
+                                                        activity={activity.activity}
+                                                        destination={trip.destination}
+                                                    />
+
+                                                </div>
+
+                                            ))}
+
+                                        </div>
+
+                                    </div>
+
+                                ))}
+
+                            </div>
+
+                        </>
+
+                    )}
+
+                </section>
+            </FadeIn>
         </main>
     );
 }

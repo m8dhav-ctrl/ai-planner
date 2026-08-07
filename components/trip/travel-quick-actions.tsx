@@ -1,3 +1,6 @@
+import FeatureCard from "@/components/ui/feature-card";
+import SectionHeader from "@/components/ui/section-header";
+
 import {
     ExternalLink,
     Globe,
@@ -17,13 +20,15 @@ export default function TravelQuickActions({
     const encoded = encodeURIComponent(destination);
 
     return (
-        <div className="mt-10 rounded-3xl border bg-background p-8 shadow-sm">
+        <FeatureCard>
 
-            <h2 className="mb-6 text-3xl font-bold">
-                ⚡ Travel Quick Actions
-            </h2>
+            <SectionHeader
+                icon={<ExternalLink className="h-6 w-6" />}
+                title="Travel Quick Actions"
+                description="Quick links to explore your destination"
+            />
 
-            <div className="flex flex-wrap gap-4">
+            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
 
                 <a
                     href={`https://www.google.com/maps/search/?api=1&query=${encoded}`}
@@ -71,6 +76,6 @@ export default function TravelQuickActions({
 
             </div>
 
-        </div>
+        </FeatureCard>
     );
 }

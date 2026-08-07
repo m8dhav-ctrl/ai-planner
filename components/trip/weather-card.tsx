@@ -1,3 +1,6 @@
+import FeatureCard from "@/components/ui/feature-card";
+import SectionHeader from "@/components/ui/section-header";
+
 import {
     Cloud,
     Thermometer,
@@ -17,14 +20,16 @@ export default function WeatherCard({
     weather,
 }: Props) {
     return (
-        <div className="mt-10 rounded-3xl border bg-background p-8 shadow-sm">
-            <h2 className="mb-8 text-3xl font-bold">
-                🌤 Current Weather
-            </h2>
+        <FeatureCard>
+            <SectionHeader
+                icon={<Cloud className="h-6 w-6" />}
+                title="Current Weather"
+                description="Live weather conditions for your destination"
+            />
 
             <div className="grid gap-6 md:grid-cols-3">
 
-                <div className="flex items-center gap-4">
+                <div className="rounded-2xl border bg-muted/20 p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
                     <Thermometer className="h-8 w-8 text-red-500" />
 
                     <div>
@@ -38,7 +43,7 @@ export default function WeatherCard({
                     </div>
                 </div>
 
-                <div className="flex items-center gap-4">
+                <div className="rounded-2xl border bg-muted/20 p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
                     <Cloud className="h-8 w-8 text-blue-500" />
 
                     <div>
@@ -54,7 +59,7 @@ export default function WeatherCard({
                     </div>
                 </div>
 
-                <div className="flex items-center gap-4">
+                <div className="rounded-2xl border bg-muted/20 p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
                     <Wind className="h-8 w-8 text-cyan-500" />
 
                     <div>
@@ -69,6 +74,6 @@ export default function WeatherCard({
                 </div>
 
             </div>
-        </div>
+        </FeatureCard>
     );
 }

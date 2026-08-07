@@ -1,3 +1,6 @@
+import FeatureCard from "@/components/ui/feature-card";
+import SectionHeader from "@/components/ui/section-header";
+
 import {
     CalendarDays,
     Coins,
@@ -19,15 +22,17 @@ export default function DestinationInfoCard({
     info,
 }: DestinationInfoCardProps) {
     return (
-        <div className="mt-10 rounded-3xl border bg-background p-8 shadow-sm">
+        <FeatureCard>
 
-            <h2 className="mb-8 text-3xl font-bold">
-                🌍 Destination Information
-            </h2>
+            <SectionHeader
+                icon={<Globe className="h-6 w-6" />}
+                title="Destination Information"
+                description="Essential travel information before your trip"
+            />
 
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
 
-                <div className="flex items-start gap-3">
+                <div className="rounded-2xl border bg-muted/20 p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
                     <Languages className="mt-1 h-5 w-5 text-blue-600" />
                     <div>
                         <p className="text-sm text-muted-foreground">
@@ -39,7 +44,7 @@ export default function DestinationInfoCard({
                     </div>
                 </div>
 
-                <div className="flex items-start gap-3">
+                <div className="rounded-2xl border bg-muted/20 p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
                     <Coins className="mt-1 h-5 w-5 text-green-600" />
                     <div>
                         <p className="text-sm text-muted-foreground">
@@ -51,7 +56,7 @@ export default function DestinationInfoCard({
                     </div>
                 </div>
 
-                <div className="flex items-start gap-3">
+                <div className="rounded-2xl border bg-muted/20 p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
                     <BadgeDollarSign className="mt-1 h-5 w-5 text-emerald-600" />
                     <div>
                         <p className="text-sm text-muted-foreground">
@@ -63,7 +68,7 @@ export default function DestinationInfoCard({
                     </div>
                 </div>
 
-                <div className="flex items-start gap-3">
+                <div className="rounded-2xl border bg-muted/20 p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
                     <Globe className="mt-1 h-5 w-5 text-purple-600" />
                     <div>
                         <p className="text-sm text-muted-foreground">
@@ -75,7 +80,7 @@ export default function DestinationInfoCard({
                     </div>
                 </div>
 
-                <div className="flex items-start gap-3">
+                <div className="rounded-2xl border bg-muted/20 p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
                     <Clock3 className="mt-1 h-5 w-5 text-indigo-600" />
                     <div>
                         <p className="text-sm text-muted-foreground">
@@ -87,7 +92,7 @@ export default function DestinationInfoCard({
                     </div>
                 </div>
 
-                <div className="flex items-start gap-3">
+                <div className="rounded-2xl border bg-muted/20 p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
                     <Plug className="mt-1 h-5 w-5 text-orange-600" />
                     <div>
                         <p className="text-sm text-muted-foreground">
@@ -99,7 +104,7 @@ export default function DestinationInfoCard({
                     </div>
                 </div>
 
-                <div className="flex items-start gap-3">
+                <div className="rounded-2xl border bg-muted/20 p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
                     <ShieldAlert className="mt-1 h-5 w-5 text-red-600" />
                     <div>
                         <p className="text-sm text-muted-foreground">
@@ -111,7 +116,7 @@ export default function DestinationInfoCard({
                     </div>
                 </div>
 
-                <div className="flex items-start gap-3">
+                <div className="rounded-2xl border bg-muted/20 p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
                     <CalendarDays className="mt-1 h-5 w-5 text-pink-600" />
                     <div>
                         <p className="text-sm text-muted-foreground">
@@ -125,6 +130,6 @@ export default function DestinationInfoCard({
 
             </div>
 
-        </div>
+        </FeatureCard>
     );
 }

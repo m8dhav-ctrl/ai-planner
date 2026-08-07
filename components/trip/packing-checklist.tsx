@@ -1,5 +1,7 @@
 "use client";
 
+import FeatureCard from "@/components/ui/feature-card";
+
 import { useMemo, useState } from "react";
 import {
     Check,
@@ -43,7 +45,7 @@ export default function PackingChecklist({
         items.length > 0;
 
     return (
-        <div className="mt-10 rounded-3xl border bg-background p-8 shadow-sm">
+        <FeatureCard>
 
             <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
 
@@ -114,15 +116,15 @@ export default function PackingChecklist({
                             type="button"
                             onClick={() => toggle(index)}
                             className={`flex w-full items-center gap-3 rounded-xl border p-4 transition ${done
-                                    ? "border-green-500 bg-green-50"
-                                    : "hover:bg-muted"
+                                ? "border-green-500 bg-green-50"
+                                : "hover:bg-muted"
                                 }`}
                         >
 
                             <div
                                 className={`flex h-6 w-6 items-center justify-center rounded-full border ${done
-                                        ? "border-green-600 bg-green-600 text-white"
-                                        : ""
+                                    ? "border-green-600 bg-green-600 text-white"
+                                    : ""
                                     }`}
                             >
                                 {done && (
@@ -147,6 +149,6 @@ export default function PackingChecklist({
 
             </div>
 
-        </div>
+        </FeatureCard>
     );
 }

@@ -1,3 +1,5 @@
+import SectionHeader from "@/components/ui/section-header";
+import FeatureCard from "@/components/ui/feature-card";
 import {
     BedDouble,
     Utensils,
@@ -24,11 +26,13 @@ export default function BudgetCard({
     budget,
 }: Props) {
     return (
-        <div className="mt-10 rounded-3xl border bg-background p-8 shadow-sm">
+        <FeatureCard>
 
-            <h2 className="mb-8 text-3xl font-bold">
-                💰 Estimated Trip Budget
-            </h2>
+            <SectionHeader
+                icon={<Wallet className="h-6 w-6" />}
+                title="Estimated Trip Budget"
+                description="Estimated expenses based on your itinerary"
+            />
 
             <div className="space-y-5">
 
@@ -67,7 +71,7 @@ export default function BudgetCard({
 
             </div>
 
-        </div>
+        </FeatureCard>
     );
 }
 

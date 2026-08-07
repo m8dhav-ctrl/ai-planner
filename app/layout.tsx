@@ -4,6 +4,8 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
 
+import ThemeProvider from "@/components/theme/theme-provider";
+
 export const metadata: Metadata = {
   title: "AI Travel Planner",
   description: "Plan AI-powered trips effortlessly.",
@@ -15,16 +17,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body>
         <ClerkProvider>
-          {children}
+          <ThemeProvider>
 
-          <Toaster
-            position="top-right"
-            richColors
-            closeButton
-          />
+            {children}
+
+            <Toaster
+              position="top-right"
+              richColors
+              closeButton
+            />
+
+          </ThemeProvider>
         </ClerkProvider>
       </body>
     </html>

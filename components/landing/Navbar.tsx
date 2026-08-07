@@ -46,7 +46,7 @@ export async function Navbar() {
                                 <Button>Dashboard</Button>
                             </Link>
 
-                            <UserButton afterSignOutUrl="/" />
+                            <UserButton />
                         </>
                     ) : (
                         <>
