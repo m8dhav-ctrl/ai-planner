@@ -13,11 +13,21 @@ export async function createTrip(formData: FormData) {
         throw new Error("Unauthorized");
     }
 
-    const destination = formData.get("destination")?.toString().trim();
-    const startDate = formData.get("startDate")?.toString();
-    const endDate = formData.get("endDate")?.toString();
-    const budget = formData.get("budget")?.toString();
-    const travelers = Number(formData.get("travelers"));
+    const destination =
+        formData.get("destination")?.toString().trim();
+
+    const startDate =
+        formData.get("startDate")?.toString();
+
+    const endDate =
+        formData.get("endDate")?.toString();
+
+    const budget =
+        formData.get("budget")?.toString();
+
+    const travelers =
+        Number(formData.get("travelers"));
+
     const preferences =
         formData.get("preferences")?.toString().trim() || null;
 
@@ -28,10 +38,26 @@ export async function createTrip(formData: FormData) {
         !budget ||
         Number.isNaN(travelers)
     ) {
-        throw new Error("Please complete all required fields.");
+        throw new Error(
+            "Please complete all required fields."
+        );
     }
 
-    // Step 1: Save the trip
+    // Generate the AI itinerary first.
+    //
+    // generateItinerary already converts Gemini's JSON
+    // response into a JavaScript object.
+    const itinerary = await generateItinerary({
+        destination,
+        startDate,
+        endDate,
+        budget,
+        travelers,
+        preferences,
+    });
+
+    // Only create the database record after the AI
+    // itinerary has been generated successfully.
     const trip = await prisma.trip.create({
         data: {
             clerkUserId: userId,
@@ -41,40 +67,10 @@ export async function createTrip(formData: FormData) {
             budget,
             travelers,
             preferences,
-        },
-    });
-
-    // Step 2: Generate itinerary with Gemini
-    const aiResponse = await generateItinerary({
-        destination,
-        startDate,
-        endDate,
-        budget,
-        travelers,
-        preferences,
-    });
-
-    // Step 3: Parse the returned JSON
-    let itinerary;
-
-    try {
-        itinerary = JSON.parse(aiResponse);
-    } catch (error) {
-        console.error("Gemini returned invalid JSON:");
-        console.error(aiResponse);
-
-        throw new Error("Gemini returned an invalid itinerary.");
-    }
-
-    // Step 4: Save itinerary
-    await prisma.trip.update({
-        where: {
-            id: trip.id,
-        },
-        data: {
             itinerary,
         },
     });
 
-    redirect("/dashboard");
+    // Open the newly-created trip directly.
+    redirect(`/dashboard/trips/${trip.id}`);
 }
