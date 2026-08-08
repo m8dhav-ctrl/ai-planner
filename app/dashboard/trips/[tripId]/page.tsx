@@ -43,6 +43,9 @@ import TripMapCard from "@/components/maps/trip-map-card";
 import { geocodeLocation } from "@/lib/geocoding";
 
 import TravelQuickActions from "@/components/trip/travel-quick-actions";
+import ExportPdfButton from "@/components/trip/export-pdf-button";
+import PrintButton from "@/components/trip/print-button";
+import ShareTripButton from "@/components/trip/share-trip-button";
 
 type Props = {
     params: Promise<{
@@ -353,7 +356,57 @@ export default async function TripDetailsPage({
                                 <h2 className="text-3xl font-bold">
                                     Trip Summary
                                 </h2>
+                            </div>
+                            {/* Trip Tools */}
+                            <div className="mt-8 rounded-3xl border bg-background p-6 shadow-sm">
+                                <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                                    <div>
+                                        <h2 className="text-xl font-bold">
+                                            Trip Tools
+                                        </h2>
+                                        <p className="mt-1 text-sm text-muted-foreground">
+                                            Save, print, share, or quickly access travel tools for this trip.
+                                        </p>
+                                    </div>
 
+                                    <div className="flex flex-wrap gap-3">
+                                        <ExportPdfButton
+                                            tripSummary={{
+                                                destination:
+                                                    itinerary.tripSummary?.destination ??
+                                                    trip.destination,
+                                                budget:
+                                                    itinerary.tripSummary?.budget ??
+                                                    trip.budget,
+                                                travelers:
+                                                    itinerary.tripSummary?.travelers ??
+                                                    trip.travelers,
+                                                totalDays:
+                                                    itinerary.tripSummary?.totalDays ??
+                                                    Math.ceil(
+                                                        (trip.endDate.getTime() -
+                                                            trip.startDate.getTime()) /
+                                                        (1000 * 60 * 60 * 24)
+                                                    ) + 1,
+                                            }}
+                                            budget={budgetBreakdown}
+                                            packingList={packingList}
+                                            itinerary={itinerary.days ?? []}
+                                        />
+
+                                        <PrintButton />
+
+                                        <ShareTripButton
+                                            destination={trip.destination}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="mt-6 border-t pt-6">
+                                    <TravelQuickActions
+                                        destination={trip.destination}
+                                    />
+                                </div>
                             </div>
 
                             <div className="mt-8 grid gap-6 md:grid-cols-2">
@@ -409,10 +462,6 @@ export default async function TripDetailsPage({
                                 weather={weather}
                             />
                         )}
-
-                        <TravelQuickActions
-                            destination={trip.destination}
-                        />
 
                         <HotelSearchCard
                             destination={trip.destination}
