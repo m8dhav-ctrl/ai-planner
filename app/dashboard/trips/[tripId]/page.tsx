@@ -357,30 +357,39 @@ export default async function TripDetailsPage({
                                     Trip Summary
                                 </h2>
                             </div>
+
                             {/* Trip Tools */}
+
                             <div className="mt-8 rounded-3xl border bg-background p-6 shadow-sm">
+
                                 <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+
                                     <div>
                                         <h2 className="text-xl font-bold">
                                             Trip Tools
                                         </h2>
+
                                         <p className="mt-1 text-sm text-muted-foreground">
                                             Save, print, share, or quickly access travel tools for this trip.
                                         </p>
                                     </div>
 
                                     <div className="flex flex-wrap gap-3">
+
                                         <ExportPdfButton
                                             tripSummary={{
                                                 destination:
                                                     itinerary.tripSummary?.destination ??
                                                     trip.destination,
+
                                                 budget:
                                                     itinerary.tripSummary?.budget ??
                                                     trip.budget,
+
                                                 travelers:
                                                     itinerary.tripSummary?.travelers ??
                                                     trip.travelers,
+
                                                 totalDays:
                                                     itinerary.tripSummary?.totalDays ??
                                                     Math.ceil(
@@ -399,15 +408,22 @@ export default async function TripDetailsPage({
                                         <ShareTripButton
                                             destination={trip.destination}
                                         />
+
                                     </div>
+
                                 </div>
 
                                 <div className="mt-6 border-t pt-6">
+
                                     <TravelQuickActions
                                         destination={trip.destination}
                                     />
+
                                 </div>
+
                             </div>
+
+
 
                             <div className="mt-8 grid gap-6 md:grid-cols-2">
 
