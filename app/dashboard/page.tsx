@@ -10,6 +10,17 @@ import StatsCards from "@/components/dashboard/stats-cards";
 import TripsGrid from "@/components/dashboard/trips-grid";
 import EmptyState from "@/components/dashboard/empty-state";
 
+type DashboardTrip = {
+    id: string;
+    destination: string;
+    budget: string;
+    travelers: number;
+    preferences: string | null;
+    startDate: Date;
+    endDate: Date;
+    itinerary: unknown;
+};
+
 export default async function DashboardPage() {
     const { userId } = await auth();
 
@@ -17,29 +28,35 @@ export default async function DashboardPage() {
         redirect("/sign-in");
     }
 
-    const trips = await prisma.trip.findMany({
-        where: {
-            clerkUserId: userId,
-        },
-        orderBy: {
-            createdAt: "desc",
-        },
-    });
+    const trips: DashboardTrip[] =
+        await prisma.trip.findMany({
+            where: {
+                clerkUserId: userId,
+            },
+            orderBy: {
+                createdAt: "desc",
+            },
+        });
 
     const today = new Date();
 
     const totalTrips = trips.length;
 
     const upcomingTrips = trips.filter(
-        (trip) => trip.startDate >= today
+        (trip: DashboardTrip) =>
+            trip.startDate >= today
     ).length;
 
     const aiTrips = trips.filter(
-        (trip) => Boolean(trip.itinerary)
+        (trip: DashboardTrip) =>
+            Boolean(trip.itinerary)
     ).length;
 
     const uniqueDestinations = new Set(
-        trips.map((trip) => trip.destination)
+        trips.map(
+            (trip: DashboardTrip) =>
+                trip.destination
+        )
     ).size;
 
     return (
@@ -85,7 +102,7 @@ export default async function DashboardPage() {
                     aiTrips={aiTrips}
                 />
 
-                {/* Empty State */}
+                {/* Trips */}
 
                 {trips.length === 0 ? (
 
